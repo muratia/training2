@@ -1,46 +1,24 @@
 package com.am.training.demo.exception;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import com.am.training.demo.dto.ErrorDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-
+import java.util.Date;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-
-    @ExceptionHandler(value = {
-            ApiRequestException.class,
-
+    @ExceptionHandler(value = { ApiException.class,
+            ColorNotFoundException.class,
             NoPersonsException.class,
-            EmptyListException.class
+            EmptyListException.class,
+            PersonNotFoundException.class
     })
-    public ResponseEntity<Object> handleApiRequestException(ApiRequestException e) {
-        // 1. Create a payload the api exception details
-        HttpStatus badRequest = HttpStatus.NOT_FOUND;
-        ApiException apiException = new ApiException (
-                e.getMessage (),
-                badRequest,
-                ZonedDateTime.now (ZoneId.of ("Z")));
-        // 2. return response entity
-        return new ResponseEntity<> (apiException, badRequest);
+    public ResponseEntity<Object> handleResponseException(ApiException e) {
+        ErrorDTO errorDTO = new ErrorDTO(e.getMessage(), new Date());
+        return new ResponseEntity<> (errorDTO, e.getHttpStatus());
     }
-
-    @ExceptionHandler(value
-            = {  PersonNotFoundException.class, IllegalArgumentException.class, IllegalStateException.class,ColorNotFoundException.class  })
-    protected ResponseEntity<Object> handleConflict(
-            RuntimeException ex, WebRequest request) {
-        String bodyOfResponse = ex.getMessage();
-        return handleExceptionInternal(ex, bodyOfResponse,
-                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-    }
-
-
 }

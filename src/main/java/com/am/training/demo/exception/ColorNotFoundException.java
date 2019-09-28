@@ -1,7 +1,7 @@
 package com.am.training.demo.exception;
 
 @SuppressWarnings("unused")
-public class ColorNotFoundException extends RuntimeException {
+public class ColorNotFoundException extends  Exception {
 
     public ColorNotFoundException() {
     }

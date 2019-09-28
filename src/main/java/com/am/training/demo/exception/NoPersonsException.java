@@ -1,6 +1,6 @@
 package com.am.training.demo.exception;
 
-public class NoPersonsException extends RuntimeException {
+public class NoPersonsException extends Exception {
 
     public NoPersonsException(String message) {
         super (message);

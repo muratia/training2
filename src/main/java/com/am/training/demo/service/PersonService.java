@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface PersonService {
 
-    Optional<Person> find(Long id) ;
+    Person find(Long id) throws PersonNotFoundException;
 
     Person save(Person person);
 
@@ -19,7 +19,7 @@ public interface PersonService {
 
     List<Person> findByColor(Integer color);
 
-    List<Person> findByColorName(String color)  ;
+    List<Person> findByColorName(String color) throws ColorNotFoundException, NoPersonsException;
 
     List<Person> save(List<Person> persons) throws EmptyListException;
 }

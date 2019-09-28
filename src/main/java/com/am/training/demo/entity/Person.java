@@ -1,5 +1,6 @@
 package com.am.training.demo.entity;
 
+import com.am.training.demo.dto.PersonDTO;
 import com.am.training.demo.utils.ColorHandler;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,17 +18,17 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonPropertyOrder()
-    private Long id;
+
+    @JsonIgnore private Long id;
 
     @Column(name = "name", length = 150)
-    @JsonProperty(value = "name")
     private String name;
-    @JsonProperty(value = "lastname")
+    @Column(name = "lastName", length = 150)
     private String lastName;
-    @JsonProperty(value = "zipcode")
+    @Column(name = "zipCode", length = 12)
     private String zipCode;
+    @Column(name = "city", length = 150)
     private String city;
-    @JsonIgnore
     @JsonIgnoreProperties(ignoreUnknown = true)
     private Integer color;
 
@@ -103,7 +104,6 @@ public class Person {
         this.color = color;
     }
 
-    @JsonProperty("color")
     public String getColorName() {
         return this.colorHandler.getColors ().get (this.color);
     }
@@ -132,5 +132,17 @@ public class Person {
                 ", color=" + color +
                 ", colorHandler=" + colorHandler +
                 '}';
+    }
+
+    public PersonDTO toPersonDTO(){
+        PersonDTO personDTO = new PersonDTO();
+
+        personDTO.setId(this.getId());
+        personDTO.setName(this.getName());
+        personDTO.setLastName(this.getLastName());
+        personDTO.setZipCode(this.getZipCode());
+        personDTO.setCity(this.getCity());
+        personDTO.setColor(this.getColorName());
+        return personDTO;
     }
 }

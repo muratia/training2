@@ -12,6 +12,9 @@ import org.springframework.context.annotation.FilterType;
 @ComponentScan(excludeFilters =
 @ComponentScan.Filter(type = FilterType.REGEX,
         pattern = "com\\.am\\.training\\.demo\\.utils\\..*"))
+@ComponentScan(excludeFilters =
+@ComponentScan.Filter(type = FilterType.REGEX,
+        pattern = "com\\.am\\.training\\.demo\\.dto\\..*"))
 public class DemoApplication {
 
     public static void main(String[] args) {
