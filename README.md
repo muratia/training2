@@ -1,6 +1,6 @@
-# training2
+# Training version 2
 
- Endpoints
+## Endpoints
 
 http://127.0.0.1:8080/persons/1 - returns the entity with primary key 1
 
