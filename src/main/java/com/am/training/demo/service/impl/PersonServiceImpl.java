@@ -38,7 +38,6 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Optional<Person> find(Long id)  {
 
-
         return repository.findById(id);
     }
 
@@ -49,25 +48,17 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> findPersons() throws NoPersonsException {
-        List<Person> people = this.repository.findAll ();
-        if (people.size () == 0) throw new NoPersonsException ("There are no persons on the database");
-        return people;
+        return repository.findAll();
     }
 
     @Override
     public List<Person> findByColor(Integer color)  {
-
         return this.repository.findByColor (color);
     }
 
     @Override
     public List<Person> findByColorName(String colorName) {
-
-
-        Integer colorId = this.colorHandler.getColorNames ().get (colorName);
-
-
-        return this.repository.findByColor (colorId);
+        return this.repository.findByColor (this.colorHandler.getColorNames ().get (colorName));
     }
 
     @Override

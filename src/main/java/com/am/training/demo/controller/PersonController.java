@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +42,11 @@ public class PersonController {
 
     @GetMapping(value = "", produces = "application/json")
     public List<Person> getPersons() throws NoPersonsException {
-
-        return personService.findPersons();
+        List<Person> persons = personService.findPersons();
+        if(persons.isEmpty()){
+            throw new NoPersonsException("No presons were found");
+        }
+        return persons;
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
