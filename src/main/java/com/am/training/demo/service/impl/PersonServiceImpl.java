@@ -1,6 +1,5 @@
 package com.am.training.demo.service.impl;
 
-import com.am.training.demo.dto.PersonDTO;
 import com.am.training.demo.entity.Person;
 import com.am.training.demo.exception.ColorNotFoundException;
 import com.am.training.demo.exception.EmptyListException;
@@ -8,16 +7,13 @@ import com.am.training.demo.exception.NoPersonsException;
 import com.am.training.demo.exception.PersonNotFoundException;
 import com.am.training.demo.repository.PersonRepository;
 import com.am.training.demo.service.PersonService;
-import com.am.training.demo.utils.ColorHandler;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.am.training.demo.util.ColorHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,9 +39,9 @@ public class PersonServiceImpl implements PersonService {
     public Person find(Long id) throws PersonNotFoundException{
         Assert.isTrue( id != null, "id must not be null");
         //if(id == null) throw new IllegalArgumentException("Illegal parameter");
-        Person person = repository.findById(id).orElse(null);
-        if (person == null) throw new PersonNotFoundException("Person not found");
-        return person;
+        Optional<Person> optionalPerson = repository.findById(id);
+        if (!optionalPerson.isPresent()) throw new PersonNotFoundException("Person not found");
+        return optionalPerson.get();
     }
 
     @Override

@@ -1,10 +1,9 @@
 package com.am.training.demo.entity;
 
 import com.am.training.demo.dto.PersonDTO;
-import com.am.training.demo.utils.ColorHandler;
+import com.am.training.demo.util.ColorHandler;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.persistence.*;
@@ -190,19 +189,5 @@ public class Person {
                 '}';
     }
 
-    public PersonDTO toPersonDTO(){
-        PersonDTO personDTO = new PersonDTO();
 
-        personDTO.setId(this.getId());
-        personDTO.setName(this.getName());
-        personDTO.setLastName(this.getLastName());
-        personDTO.setZipCode(this.getZipCode());
-        personDTO.setCity(this.getCity());
-        personDTO.setColor(this.getColorName());
-        personDTO.setEmail(this.getEmail());
-        personDTO.setSocialNetworks(this.getSocialNetworks());
-        personDTO.setNativeLanguage(this.getNativeLanguage());
-        personDTO.setOtherLanguages(this.getOtherLanguages());
-        return personDTO;
-    }
 }

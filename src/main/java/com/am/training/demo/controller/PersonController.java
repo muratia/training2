@@ -5,8 +5,7 @@ import com.am.training.demo.entity.Person;
 import com.am.training.demo.exception.*;
 import com.am.training.demo.processor.CvsProcessor;
 import com.am.training.demo.service.PersonService;
-import com.am.training.demo.utils.ColorHandler;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.am.training.demo.util.mapper.PersonMapper;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +18,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("persons")
 public class PersonController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonController.class);
 
     @Autowired
     private PersonService personService;
@@ -55,7 +53,7 @@ public class PersonController {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.map(persons, personDTOS);
         for (Person p: persons) {
-            personDTOS.add(p.toPersonDTO());
+            personDTOS.add(PersonMapper.toDTO(p));
         }
         return personDTOS;
     }
@@ -63,28 +61,23 @@ public class PersonController {
     @GetMapping(value = "/{id}", produces = "application/json")
     @ResponseBody
     public PersonDTO searchById(@PathVariable Long id) throws ApiException {
-        try {
-            PersonDTO personDTO = new PersonDTO();
-            ModelMapper modelMapper = new ModelMapper();
+       try {
             Person person = personService.find(id);
-            modelMapper.map(person, personDTO);
-            return personDTO;
-        } catch (Exception ex) {
-            throw new ApiException(ex.getMessage(), HttpStatus.NOT_FOUND);
+            return PersonMapper.toDTO(person);
+        }catch (IllegalArgumentException ieaex){
+            throw new ApiException(ieaex.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (PersonNotFoundException pnfe){
+            throw new ApiException(pnfe.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception ex) {
+            throw new ApiException(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("color/{color}")
     public List<PersonDTO> searchByColor(@PathVariable String color) throws ApiException {
         try {
-            List<Person> personList = personService.findByColorName(color);
-            List<PersonDTO> personDTOS = new ArrayList<>();
-            for (Person person : personList) {
-                personDTOS.add(person.toPersonDTO());
-            }
-            return personDTOS;
+            return PersonMapper.toDTOList(personService.findByColorName(color));
         } catch (NoPersonsException e) {
-
             throw new ApiException(e.getMessage(), HttpStatus.NO_CONTENT);
         } catch (ColorNotFoundException e) {
             throw new ApiException(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -94,12 +87,7 @@ public class PersonController {
     @GetMapping("email/{email}")
     public List<PersonDTO> searchByEmail(@PathVariable String email) throws ApiException {
         try {
-            List<Person> personList = personService.findByEmail(email);
-            List<PersonDTO> personDTOS = new ArrayList<>();
-            for (Person person : personList) {
-                personDTOS.add(person.toPersonDTO());
-            }
-            return personDTOS;
+            return PersonMapper.toDTOList(personService.findByEmail(email));
         } catch (NoPersonsException e) {
 
             throw new ApiException(e.getMessage(), HttpStatus.NO_CONTENT);

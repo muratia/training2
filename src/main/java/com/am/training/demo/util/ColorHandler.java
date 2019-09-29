@@ -1,4 +1,4 @@
-package com.am.training.demo.utils;
+package com.am.training.demo.util;
 
 import org.apache.catalina.util.ParameterMap;
 

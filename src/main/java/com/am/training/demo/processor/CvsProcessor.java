@@ -1,7 +1,7 @@
 package com.am.training.demo.processor;
 
 import com.am.training.demo.entity.Person;
-import com.am.training.demo.utils.FileUtils;
+import com.am.training.demo.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
