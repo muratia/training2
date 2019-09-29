@@ -8,11 +8,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 
 @Entity
-@Table(name = "persons")
+@Table(name = "persons", uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
 @JsonPropertyOrder({"id", "name", "lastname", "zipcode", "city", "color"})
 public class Person {
     @Id
@@ -31,13 +32,26 @@ public class Person {
     private String city;
     @JsonIgnoreProperties(ignoreUnknown = true)
     private Integer color;
+    @Column( name="email",  insertable = true, updatable =  false)
+    private String email;
 
     @Transient
     private ColorHandler colorHandler;
 
+    @OneToMany
+    private List<SocialNetwork> socialNetworks;
+
+    @OneToOne
+    private Language nativeLanguage;
+
+    @OneToMany
+    private List<Language> otherLanguages;
+
     public Person() {
         colorHandler = new ColorHandler ();
     }
+
+
 
     public Person(Long id, String name, String lastName, String zipCode, String city) {
         this.id = id;
@@ -54,6 +68,16 @@ public class Person {
         this.zipCode = zipCode;
         this.city = city;
         this.color = color;
+    }
+
+    public Person(Long id, String name, String lastName, String zipCode, String city, Integer color, String email) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.color = color;
+        this.email = email;
     }
 
     public Long getId() {
@@ -108,6 +132,38 @@ public class Person {
         return this.colorHandler.getColors ().get (this.color);
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<SocialNetwork> getSocialNetworks() {
+        return socialNetworks;
+    }
+
+    public void setSocialNetworks(List<SocialNetwork> socialNetworks) {
+        this.socialNetworks = socialNetworks;
+    }
+
+    public Language getNativeLanguage() {
+        return nativeLanguage;
+    }
+
+    public void setNativeLanguage(Language nativeLanguage) {
+        this.nativeLanguage = nativeLanguage;
+    }
+
+    public List<Language> getOtherLanguages() {
+        return otherLanguages;
+    }
+
+    public void setOtherLanguages(List<Language> otherLanguages) {
+        this.otherLanguages = otherLanguages;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -143,6 +199,10 @@ public class Person {
         personDTO.setZipCode(this.getZipCode());
         personDTO.setCity(this.getCity());
         personDTO.setColor(this.getColorName());
+        personDTO.setEmail(this.getEmail());
+        personDTO.setSocialNetworks(this.getSocialNetworks());
+        personDTO.setNativeLanguage(this.getNativeLanguage());
+        personDTO.setOtherLanguages(this.getOtherLanguages());
         return personDTO;
     }
 }

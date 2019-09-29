@@ -73,7 +73,7 @@ public class PersonServiceImpl implements PersonService {
         if(persons.isEmpty()){
             throw new NoPersonsException("There are no entities");
         }
-        return this.repository.findByColor (this.colorHandler.getColorNames ().get (colorName));
+        return persons;
     }
 
     @Override
@@ -81,5 +81,15 @@ public class PersonServiceImpl implements PersonService {
         logger.error ("List of Persons: " + persons);
         if (persons.isEmpty ()) throw new EmptyListException ("The list is empty");
         return this.repository.saveAll (persons);
+    }
+
+    @Override
+    public List<Person> findByEmail(String email) throws NoPersonsException {
+        Assert.isTrue( email != null, "Email must not be null");
+        List<Person> persons = this.repository.findByEmail(email);
+        if(persons.isEmpty()){
+            throw new NoPersonsException("There are no entities");
+        }
+        return persons;
     }
 }

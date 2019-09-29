@@ -1,5 +1,10 @@
 package com.am.training.demo.dto;
 
+import com.am.training.demo.entity.Language;
+import com.am.training.demo.entity.SocialNetwork;
+
+import java.util.List;
+
 public class PersonDTO {
 
     private Long id;
@@ -8,18 +13,44 @@ public class PersonDTO {
     private String zipCode;
     private String city;
     private String color;
+    private String email;
+    private List<SocialNetwork> socialNetworks;
+    private Language nativeLanguage;
+    private List<Language> otherLanguages;
 
     public PersonDTO() {
     }
 
-    public PersonDTO(Long id, String name, String lastName, String zipCode, String city, String zipCode1, String color) {
+    public PersonDTO(Long id, String name, String lastName, String zipCode, String city, String color) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.zipCode = zipCode;
         this.city = city;
-        this.zipCode = zipCode1;
         this.color = color;
+    }
+
+    public PersonDTO(Long id, String name, String lastName, String zipCode, String city, String color, String email) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.color = color;
+        this.email = email;
+    }
+
+    public PersonDTO(Long id, String name, String lastName, String zipCode, String city, String color, String email, List<SocialNetwork> socialNetworks, Language nativeLanguage, List<Language> otherLanguages) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.color = color;
+        this.email = email;
+        this.socialNetworks = socialNetworks;
+        this.nativeLanguage = nativeLanguage;
+        this.otherLanguages = otherLanguages;
     }
 
     public Long getId() {
@@ -68,5 +99,37 @@ public class PersonDTO {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<SocialNetwork> getSocialNetworks() {
+        return socialNetworks;
+    }
+
+    public void setSocialNetworks(List<SocialNetwork> socialNetworks) {
+        this.socialNetworks = socialNetworks;
+    }
+
+    public Language getNativeLanguage() {
+        return nativeLanguage;
+    }
+
+    public void setNativeLanguage(Language nativeLanguage) {
+        this.nativeLanguage = nativeLanguage;
+    }
+
+    public List<Language> getOtherLanguages() {
+        return otherLanguages;
+    }
+
+    public void setOtherLanguages(List<Language> otherLanguages) {
+        this.otherLanguages = otherLanguages;
     }
 }

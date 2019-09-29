@@ -89,7 +89,22 @@ public class PersonController {
         } catch (ColorNotFoundException e) {
             throw new ApiException(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
-
     }
+
+    @GetMapping("email/{email}")
+    public List<PersonDTO> searchByEmail(@PathVariable String email) throws ApiException {
+        try {
+            List<Person> personList = personService.findByEmail(email);
+            List<PersonDTO> personDTOS = new ArrayList<>();
+            for (Person person : personList) {
+                personDTOS.add(person.toPersonDTO());
+            }
+            return personDTOS;
+        } catch (NoPersonsException e) {
+
+            throw new ApiException(e.getMessage(), HttpStatus.NO_CONTENT);
+        }
+    }
+
+
 }

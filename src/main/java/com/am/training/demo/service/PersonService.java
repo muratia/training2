@@ -22,4 +22,6 @@ public interface PersonService {
     List<Person> findByColorName(String color) throws ColorNotFoundException, NoPersonsException;
 
     List<Person> save(List<Person> persons) throws EmptyListException;
+
+    List<Person> findByEmail(String email) throws NoPersonsException;
 }
