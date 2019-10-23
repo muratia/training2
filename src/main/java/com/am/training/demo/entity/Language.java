@@ -1,5 +1,7 @@
 package com.am.training.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +10,7 @@ public class Language {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
 
     private String title;
@@ -22,7 +25,7 @@ public class Language {
         this.title = title;
         this.description = description;
     }
-
+    @JsonIgnore
     public int getId() {
         return id;
     }
@@ -39,6 +42,7 @@ public class Language {
         this.title = title;
     }
 
+    @JsonIgnore
     public String getDescription() {
         return description;
     }

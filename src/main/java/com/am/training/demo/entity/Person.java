@@ -5,8 +5,11 @@ import com.am.training.demo.util.ColorHandler;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.Subselect;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "persons", uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
 @JsonPropertyOrder({"id", "name", "lastname", "zipcode", "city", "color"})
+@Subselect("select p.id,p.city,p.color,p.dob,p.email,p.lastName,p.name,p.nativeLanguage_id,p.zipCode,(TIMESTAMPDIFF(YEAR, IFNULL(p.dob,CURDATE()) , CURDATE())) as age from  persons p")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,13 +29,18 @@ public class Person {
     private String name;
     @Column(name = "lastName", length = 150)
     private String lastName;
+
+    @Temporal(value = TemporalType.DATE)
+    private Date dob;
+
+    private Integer age;
     @Column(name = "zipCode", length = 12)
     private String zipCode;
     @Column(name = "city", length = 150)
     private String city;
     @JsonIgnoreProperties(ignoreUnknown = true)
     private Integer color;
-    @Column( name="email",  insertable = true, updatable =  false)
+    @Column( name="email",   updatable =  false)
     private String email;
 
     @Transient
@@ -79,6 +88,31 @@ public class Person {
         this.email = email;
     }
 
+    public Person(Long id, String name, String lastName,
+                  Date dob, String zipCode, String city, Integer color, String email) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.color = color;
+        this.email = email;
+    }
+
+    public Person(Long id, String name, String lastName, Date dob, Integer age, String zipCode, String city,
+                  Integer color, String email) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.age = age;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.color = color;
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }
@@ -119,7 +153,7 @@ public class Person {
         this.city = city;
     }
 
-    public Integer getColor() {
+    protected Integer getColor() {
         return color;
     }
 
@@ -161,6 +195,22 @@ public class Person {
 
     public void setOtherLanguages(List<Language> otherLanguages) {
         this.otherLanguages = otherLanguages;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     @Override

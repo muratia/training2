@@ -1,5 +1,7 @@
 package com.am.training.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 
@@ -14,7 +16,7 @@ public class SocialNetwork {
     @Column(name="url", unique = true)
     private String url;
 
-    public Boolean active;
+    private Boolean active;
 
     public SocialNetwork(){
 
@@ -25,7 +27,7 @@ public class SocialNetwork {
         this.url = url;
         this.active = active;
     }
-
+    @JsonIgnore
     public Long getId() {
         return id;
     }
@@ -42,6 +44,7 @@ public class SocialNetwork {
         this.url = url;
     }
 
+    @JsonIgnore
     public Boolean getActive() {
         return active;
     }
