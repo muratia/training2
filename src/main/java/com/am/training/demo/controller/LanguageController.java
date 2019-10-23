@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value="languages")
 public class LanguageController {
 
+    private final LanguageService service;
 
-
-    public LanguageController( ){
-
+    public LanguageController(LanguageService languageService ){
+        this.service = languageService;
     }
 
     @GetMapping("{id}")
     public Language findById(@PathVariable Integer id) throws LanguageNotFoundException {
-        return null; //service.find(id);
+        return service.find(id);
     }
 }
