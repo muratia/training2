@@ -14,6 +14,7 @@ public class PersonDTO {
     private String city;
     private String color;
     private String email;
+    private Integer age;
     private List<SocialNetwork> socialNetworks;
     private Language nativeLanguage;
     private List<Language> otherLanguages;
@@ -51,6 +52,17 @@ public class PersonDTO {
         this.socialNetworks = socialNetworks;
         this.nativeLanguage = nativeLanguage;
         this.otherLanguages = otherLanguages;
+    }
+
+    public PersonDTO(Long id, String name, String lastName, String zipCode, String city, String color, String email, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.color = color;
+        this.email = email;
+        this.age = age;
     }
 
     public Long getId() {
@@ -131,5 +143,13 @@ public class PersonDTO {
 
     public void setOtherLanguages(List<Language> otherLanguages) {
         this.otherLanguages = otherLanguages;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }
