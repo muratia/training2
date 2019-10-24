@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+/**
+ * This class serves as entity of languages
+ */
 @Entity
 @Table(name="languages")
 public class Language {
@@ -17,9 +20,18 @@ public class Language {
 
     private String description;
 
+    /**
+     *  Emtpy Constructor
+     */
     public Language() {
     }
 
+    /**
+     *  Constructor of the class
+     * @param id id of the tuple
+     * @param title Title of the language
+     * @param description Description of the language
+     */
     public Language(int id, String title, String description) {
         this.id = id;
         this.title = title;

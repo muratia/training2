@@ -48,23 +48,18 @@ public class PersonController {
 
         List<PersonDTO> personDTOS = new ArrayList<>();
 
-
         if (persons.isEmpty()) {
             throw new NoPersonsException("No persons were found");
         }
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.map(persons, personDTOS);
-        for (Person p: persons) {
-            personDTOS.add(toDTO(p));
-        }
+
+        personDTOS = PersonMapper.toDTOList(persons);
         return personDTOS;
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public PersonDTO searchById(@PathVariable Long id) throws ApiException {
        try {
-            Person person = personService.find(id);
-            return toDTO(person);
+           return toDTO(personService.find(id));
         }catch (IllegalArgumentException ieaex){
             throw new ApiException(ieaex.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (PersonNotFoundException pnfe){
