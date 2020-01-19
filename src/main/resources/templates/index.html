@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Datei Upload </title>
+
+
+    <SCRIPT type="text/javascript">
+        function CheckFile(){
+                if( document.getElementById("file").files.length == 0 ){
+                    console.log("no files selected");
+                    return false;
+                }
+        }
+
+    </SCRIPT>
+
+    <style>
+
+     .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f8f8f8;
+        text-align:center;
+    }
+
+table {
+    width: 80%;
+
+}
+table > tr> td{
+ width: 90px;
+}
+table tr td input[type="file"]{
+text-align: left;
+
+}
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h3>Willkommen auf meiner Seite zum Hochladen der CSV-Datei.</h3>
+    </header>
+    <div>
+        <h4><u>Denken Sie daran, dass die hochgeladene Datei überschrieben wird</u></h4>
+    </div>
+
+    <div th:if="${message}">
+        <h4 th:text="${message}"/>
+    </div>
+
+    <div>
+        <form action="/csv/upload" enctype="multipart/form-data" method="POST" onsubmit="return CheckFile();">
+
+
+            <table>
+                <tr>
+                    <td>File to upload:</td>
+                    <td><input accept=".csv" id="file" name="file" type="file"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Hochladen"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

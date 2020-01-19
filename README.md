@@ -1,10 +1,51 @@
-# Training version 2
+# Training version 3
 
 ## Endpoints
  
 |  Endpoint	| HTTP Method |  Response	|  Exception |
 |---	|---	|---	|---	| 
-|  http://127.0.0.1:8080/persons/1 	|  GET |  returns the domain entity with primary key 1 	| If the id is null it throws IllegalArgumentException, if there is no such entity with given id it returns NoPersonFoundException   	|
-|  http://127.0.0.1:8080/persons/color/blue |  GET |    returns all people who selected blue color  	|  in case of type on color name it throws ColorNotFoundException, in case there are no entities it throws NoPersonsFoundException   |
-|   http://127.0.0.1:8080/persons	| GET  	| returns all domain entities  	| throws NoPersonsFoundException if there are no entities  	|
-| http://127.0.0.1:8080/persons | POST | Initializes database from the broken CSV. |
+|  http://127.0.0.1:8080/dataitem/output/?quesition 	|  GET |  returns the output based on the question provided 
+|
+
+Die Frage kann als eine, zwei oder drei durch einen vertikalen Teiler | getrennte Fragen übergeben werden
+
+Zum Beispiel.
+
+http://127.0.0.1:8080/dataitem/output/?quesition=Welcher Politiker hielt im Jahr 2013 die meisten Reden
+http://127.0.0.1:8080/dataitem/output/?quesition=Welcher Politiker hielt die meisten Reden zum Thema ”Innere Sicherheit”
+http://127.0.0.1:8080/dataitem/output/?quesition=Welcher Politiker sprach insgesamt die wenigsten Wörter
+http://127.0.0.1:8080/dataitem/output/?quesition=Welcher Politiker hielt im Jahr 2013 die meisten Reden|Welcher Politiker hielt die meisten Reden zum Thema ”Innere Sicherheit”|Welcher Politiker sprach insgesamt die wenigsten Wörter
+
+
+Der Antwort den Ersten Frage ist     
+
+{  
+    "mostSpeeches": null,  
+    "mostTalkedTopic": null,  
+    "leastWordy": null  
+}  
+
+Der Antwort für den Zweiten Frage ist  
+ 
+{  
+    "mostSpeeches": null,  
+    "mostTalkedTopic": "Alexander Abel",  
+    "leastWordy": null  
+}  
+
+Der Antwort für den Dritten Frage ist  
+
+{  
+    "mostSpeeches": null,  
+    "mostTalkedTopic": null,  
+    "leastWordy": "Alexander Abel"  
+}  
+
+Der Antwort für den kombinierten Fragen ist
+
+{  
+    "mostSpeeches": null,  
+    "mostTalkedTopic": "Alexander Abel",  
+    "leastWordy": "Alexander Abel"  
+}  
+

@@ -4,9 +4,10 @@ import org.springframework.http.HttpStatus;
 
 
 /**
- *  This class serves to capture ApiExceptions
+ * This class serves to capture ApiExceptions
  */
-public class ApiException extends  Exception {
+@SuppressWarnings("unused")
+public class ApiException extends Exception {
 
     private final String message;
 
@@ -14,10 +15,12 @@ public class ApiException extends  Exception {
 
 
     /**
-     *  Constructor of the class
-     * @param message Message
+     * Constructor of the class
+     *
+     * @param message    Message
      * @param httpStatus HttpStatus
      */
+
     public ApiException(String message, HttpStatus httpStatus) {
         this.message = message;
         this.httpStatus = httpStatus;

@@ -5,13 +5,14 @@ import java.util.Date;
 
 public class ErrorDTO {
 
-    private String message;
-    private String date;
+    private final String message;
+    private final String date;
 
     /**
      * Constructor of ErrorDTO
+     *
      * @param message Message
-     * @param date Date
+     * @param date    Date
      */
     public ErrorDTO(String message, Date date) {
         this.message = message;

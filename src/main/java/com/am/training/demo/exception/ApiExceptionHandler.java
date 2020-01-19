@@ -1,6 +1,5 @@
 package com.am.training.demo.exception;
 
-import com.am.training.demo.controller.PersonController;
 import com.am.training.demo.dto.ErrorDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,13 +20,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
      * Repsone handler
+     *
      * @param e ApiException
      * @return ResponseEntiy<Object>
      */
-    @ExceptionHandler(value = { ApiException.class })
+    @ExceptionHandler(value = {ApiException.class})
     public ResponseEntity<Object> handleResponseException(ApiException e) {
         ErrorDTO errorDTO = new ErrorDTO(e.getMessage(), new Date());
         LOGGER.error(e.getMessage());
-        return new ResponseEntity<> (errorDTO, e.getHttpStatus());
+        return new ResponseEntity<>(errorDTO, e.getHttpStatus());
     }
 }
