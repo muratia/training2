@@ -11,12 +11,19 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+/**
+ * This class serves as ControllerAdvice to channel all exceptions into one handler
+ */
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiExceptionHandler.class);
 
-
+    /**
+     * Repsone handler
+     * @param e ApiException
+     * @return ResponseEntiy<Object>
+     */
     @ExceptionHandler(value = { ApiException.class })
     public ResponseEntity<Object> handleResponseException(ApiException e) {
         ErrorDTO errorDTO = new ErrorDTO(e.getMessage(), new Date());

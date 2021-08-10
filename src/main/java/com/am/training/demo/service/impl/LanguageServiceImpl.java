@@ -5,8 +5,12 @@ import com.am.training.demo.exception.LanguageNotFoundException;
 import com.am.training.demo.repository.LanguageRepository;
 import com.am.training.demo.service.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+@Service
+@Transactional
 public class LanguageServiceImpl implements LanguageService {
 
     @Autowired

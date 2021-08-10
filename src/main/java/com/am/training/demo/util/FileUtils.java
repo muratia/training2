@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"ALL", "DuplicateExpressions"})
+
 public class FileUtils {
 
     private static final Logger logger = LoggerFactory.getLogger (FileUtils.class);

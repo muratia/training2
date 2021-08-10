@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.am.training.demo.util.mapper.PersonMapper.*;
+
 @RestController
 @RequestMapping("persons")
 public class PersonController {
@@ -28,7 +30,7 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @SuppressWarnings("SpellCheckingInspection")
+
     @PostMapping(value = "", produces = "application/json")
     public List<Person> initializDb() throws IOException, EmptyListException {
         CvsProcessor cvsProcessor = new CvsProcessor();
@@ -46,24 +48,18 @@ public class PersonController {
 
         List<PersonDTO> personDTOS = new ArrayList<>();
 
-
         if (persons.isEmpty()) {
             throw new NoPersonsException("No persons were found");
         }
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.map(persons, personDTOS);
-        for (Person p: persons) {
-            personDTOS.add(PersonMapper.toDTO(p));
-        }
+
+        personDTOS = PersonMapper.toDTOList(persons);
         return personDTOS;
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    @ResponseBody
     public PersonDTO searchById(@PathVariable Long id) throws ApiException {
        try {
-            Person person = personService.find(id);
-            return PersonMapper.toDTO(person);
+           return toDTO(personService.find(id));
         }catch (IllegalArgumentException ieaex){
             throw new ApiException(ieaex.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (PersonNotFoundException pnfe){
@@ -76,7 +72,7 @@ public class PersonController {
     @GetMapping("color/{color}")
     public List<PersonDTO> searchByColor(@PathVariable String color) throws ApiException {
         try {
-            return PersonMapper.toDTOList(personService.findByColorName(color));
+            return toDTOList(personService.findByColorName(color));
         } catch (NoPersonsException e) {
             throw new ApiException(e.getMessage(), HttpStatus.NO_CONTENT);
         } catch (ColorNotFoundException e) {
@@ -87,7 +83,7 @@ public class PersonController {
     @GetMapping("email/{email}")
     public List<PersonDTO> searchByEmail(@PathVariable String email) throws ApiException {
         try {
-            return PersonMapper.toDTOList(personService.findByEmail(email));
+            return toDTOList(personService.findByEmail(email));
         } catch (NoPersonsException e) {
 
             throw new ApiException(e.getMessage(), HttpStatus.NO_CONTENT);

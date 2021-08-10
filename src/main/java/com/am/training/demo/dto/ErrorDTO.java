@@ -4,9 +4,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ErrorDTO {
+
     private String message;
     private String date;
 
+    /**
+     * Constructor of ErrorDTO
+     * @param message Message
+     * @param date Date
+     */
     public ErrorDTO(String message, Date date) {
         this.message = message;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");

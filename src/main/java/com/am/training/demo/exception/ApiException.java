@@ -3,7 +3,9 @@ package com.am.training.demo.exception;
 import org.springframework.http.HttpStatus;
 
 
-
+/**
+ *  This class serves to capture ApiExceptions
+ */
 public class ApiException extends  Exception {
 
     private final String message;
@@ -11,6 +13,11 @@ public class ApiException extends  Exception {
     private final HttpStatus httpStatus;
 
 
+    /**
+     *  Constructor of the class
+     * @param message Message
+     * @param httpStatus HttpStatus
+     */
     public ApiException(String message, HttpStatus httpStatus) {
         this.message = message;
         this.httpStatus = httpStatus;
